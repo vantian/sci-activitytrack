@@ -1,0 +1,27 @@
+﻿
+@model Bkpm.ActivityTracker.ActivityServices.Dto.ActivityGroupDashboardDto
+@{
+    Layout = null;
+    var groupList = Model.ActivityDetails.Select(e => e.TanggalKegiatan).Distinct().OrderByDescending(e => e).ToList();
+}
+
+
+<div class="timeline-sci timeline-left mx-lg-10">
+
+    @for(int i = 0; i < groupList.Count; i++)
+    {
+
+        <div class="timeline-breaker @(i > 0 ? "timeline-breaker-middle" : "")">@groupList[0].Value.ToString("dd-MMM-yyyy")</div>
+        @foreach (var a in Model.ActivityDetails.Where(e => e.TanggalKegiatan == groupList[0]).ToList())
+        {
+          <div class="timeline-item mt-3 row text-left p-2">
+            <div class="col-12 font-weight-bold">Nama Kegiatan: @a.Nama</div>
+            <div class="col-12 font-weight-bold">Progress: @(a.Progress)%</div>
+            <div class="col-12 text-xs text-muted">Last Update: @(a.LastModificationTime.HasValue ? a.LastModificationTime.Value.ToString("dd-MMM-yyyy hh:mm:ss") : a.CreationTime.Value.ToString("dd-MMM-yyyy hh:mm:ss"))</div>
+          </div>
+        }
+
+    }
+
+      
+    </div>

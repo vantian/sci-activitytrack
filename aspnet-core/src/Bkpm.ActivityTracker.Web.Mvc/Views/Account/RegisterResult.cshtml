@@ -1,0 +1,24 @@
+﻿@model Bkpm.ActivityTracker.Web.Models.Account.RegisterResultViewModel
+@{
+    ViewBag.Title = L("SuccessfullyRegistered");
+}
+<div class="card">
+    <div class="card-body">
+        <h4>Pendaftaran Berhasil</h4>
+        <ul>
+            <li><span class="text-muted">Nama Lengkap:</span> @Model.NameAndSurname</li>
+            <li><span class="text-muted">Email:</span> @Model.EmailAddress</li>
+        </ul>
+        <div>
+            @if (!Model.IsActive)
+            {
+                <div class="alert alert-warning" role="alert">
+                    Mohon menunggu karena akun anda perlu diaktivasi oleh admin.
+                </div>
+            }
+            <div class="d-block">
+                <a asp-action="Login" class="btn btn-default btn-flat"><i class="fa fa-arrow-circle-left"></i> Kembali</a>
+            </div>
+        </div>
+    </div>
+</div>

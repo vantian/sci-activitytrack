@@ -1,0 +1,36 @@
+﻿@using Abp.Authorization.Users
+@using Abp.MultiTenancy
+@using Bkpm.ActivityTracker.Web.Models.Common.Modals
+@model Bkpm.ActivityTracker.ActivityServices.Dto.ActivityFileDto
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel("Tambah Lampiran Baru"))
+<form name="ActivityDetailsCreateForm" 
+    class="form-horizontal"
+    asp-action="UploadLampiran"
+    data-ajax="true" 
+    data-ajax-success="OnMediaSuccess"
+    data-ajax-begin="OnMediaBegin"
+    data-ajax-method="post"
+    enctype="multipart/form-data" 
+>
+    <input type="hidden" asp-for="ActivityDetailId" />
+    <div class="modal-body">            
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">Nama Lampiran</label>
+            <div class="col-md-9">
+                <input type="text" asp-for="Nama" class="form-control" required maxlength="50">
+            </div>
+        </div>
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">File</label>
+            <div class="col-md-9">
+                <input type="file" asp-for="Url" class="fileUpload" required>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>
+

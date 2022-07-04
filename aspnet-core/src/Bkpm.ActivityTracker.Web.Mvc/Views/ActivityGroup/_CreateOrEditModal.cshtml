@@ -1,0 +1,21 @@
+﻿@using Abp.Authorization.Users
+@using Abp.MultiTenancy
+@using Bkpm.ActivityTracker.Web.Models.Common.Modals
+@model Bkpm.ActivityTracker.ActivityServices.Dto.ActivityGroupDto
+@{
+    Layout = null;
+}
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_ModalHeader.cshtml", new ModalHeaderViewModel("Tambah Baru atau Perbaharui"))
+<form name="activityGroupCreateForm" role="form" class="form-horizontal">
+    <div class="modal-body">
+        <div class="form-group row required">
+            <label class="col-md-3 col-form-label">Nama Group</label>
+            <div class="col-md-9">
+                <input type="hidden" asp-for="Id" />
+                <input type="text" asp-for="Nama" class="form-control" required>
+            </div>
+        </div>
+    </div>
+    @await Html.PartialAsync("~/Views/Shared/Modals/_ModalFooterWithSaveAndCancel.cshtml")
+</form>

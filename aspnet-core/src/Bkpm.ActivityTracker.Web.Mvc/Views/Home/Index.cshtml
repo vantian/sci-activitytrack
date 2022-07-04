@@ -1,0 +1,64 @@
+﻿@using Bkpm.ActivityTracker.ActivityServices.Dto
+@using Bkpm.ActivityTracker.Web.Startup
+
+@model ActivityGroupDashboardDto
+@{
+    ViewBag.Title = L("HomePage");
+    ViewBag.CurrentPageName = PageNames.Home;
+    var groupCol = (IEnumerable<SelectListItem>)ViewData["groupCol"];
+}
+
+@section styles
+{
+   <link href="~/css/verticalTimeline.css" rel="stylesheet" asp-append-version="true" />
+ @*https://www.bootdey.com/snippets/view/bs4-event-timeline#html*@
+}
+
+@section scripts
+{
+    <script>
+
+        function ddlChange() { 
+
+                abp.ajax({
+                    url: abp.appPath + 'Home/GetTimeline?Id=' + $('#ddlGroupId').val(),
+                    type: 'POST',
+                    dataType: 'html',
+                    success: function (content) {
+                        $('#timeline-area').html(content);
+                    },
+                    error: function (e) {
+                    }
+                });
+        }
+    </script>
+}
+
+<div class="content-header">
+    <div class="container-fluid">
+        <div class="row mb-2">
+            <div class="col-sm-12">
+                <h1 class="m-0 text-dark">Peta Peluang <span class="font-weight-bold">Investasi 2022</span></h1>
+            </div>
+        </div>
+    </div>
+</div>
+<section class="content">
+<div class="container-fluid">
+    <div class="container animated animated-done bootdey" data-animate="fadeIn" data-animate-delay="0.05" style="animation-delay: 0.05s;">
+    <hr class="hr-lg mt-0 mb-2 w-10 mx-auto hr-primary">
+    <div class="form-group row">
+        <div class="col-12">
+            <select asp-items="@groupCol" asp-for="Id" class="form-control" required="required" onchange="ddlChange()" id="ddlGroupId">
+                <option value="">-Please select-</option>
+            </select>
+        </div>
+    </div>
+
+    <div id="timeline-area">
+        @await Html.PartialAsync("~/Views/Home/_Timeline.cshtml", Model)
+    </div>
+  </div>
+
+</div> <!--End container fluid-->
+</section>

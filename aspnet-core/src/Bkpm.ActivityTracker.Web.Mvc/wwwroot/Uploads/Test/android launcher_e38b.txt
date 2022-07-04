@@ -1,0 +1,10 @@
+cd C:\android-platform-tools
+
+adb connect 172.19.167.118
+
+adb install <full_path_to_the_APK_file>
+
+
+//if error install
+adb devices
+adb -s 172.19.161.0:5555 install pos.apk

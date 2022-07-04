@@ -1,0 +1,155 @@
+﻿@using Bkpm.ActivityTracker.ActivityServices.Dto
+@using Bkpm.ActivityTracker.Web.Startup
+@{
+    ViewBag.Title = "Activity Details";
+    ViewBag.CurrentPageName = PageNames.ActivityDetails;
+}
+@model ActivityDetailsDto
+
+@section scripts
+{
+    <environment names="Development">
+        <script src="~/view-resources/Views/ActivityDetails/View_Lampiran.js" asp-append-version="true"></script>
+    </environment>
+
+    <environment names="Staging,Production">
+        <script src="~/view-resources/Views/ActivityDetails/View_Lampiran.min.js" asp-append-version="true"></script>
+    </environment>
+
+    
+    <script src="~/libs/jquery-unobtrusive-ajax/jquery.unobtrusive-ajax.min.js" asp-append-version="true"></script>
+}
+
+<input type="hidden" id="activityDetailId-hidden" value="@Model.Id" />
+
+<section class="content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h3>@(Model.Nama)</h3>
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered">
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    Group 
+                                                </td>
+                                                <td>
+                                                    @(Model.ActivityGroup.Nama)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Nama 
+                                                </td>
+                                                <td>
+                                                    @(Model.Nama)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Deskripsi 
+                                                </td>
+                                                <td>
+                                                    @(Model.Deskripsi)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Tanggal Kegiatan 
+                                                </td>
+                                                <td>
+                                                    @(Model.TanggalKegiatan)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Progress 
+                                                </td>
+                                                <td>
+                                                    @(Model.Progress)%
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Tanggal Dibuat 
+                                                </td>
+                                                <td>
+                                                    @(Model.CreationTime.Value.ToString("dd-MM-yyyy HH:mm:ss"))
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Dibuat Oleh 
+                                                </td>
+                                                <td>
+                                                    @(Model.CreatorName)
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Terakhir di update 
+                                                </td>
+                                                <td>
+                                                    @(Model.LastModificationTime.HasValue ? Model.LastModificationTime.Value.ToString("dd-MM-yyyy HH:mm:ss") : "N/A")
+                                                </td>
+                                            </tr>
+                                            <tr>
+                                                <td>
+                                                    Terakhir di update oleh 
+                                                </td>
+                                                <td>
+                                                    @(Model.LastEditorName)
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body">                        
+                        <div class="row">
+                            <div class="col-md-6 col-12">
+                                <h3>Lampiran File</h3>
+                            </div>
+                            <div class="col-md-6 col-12">
+                                <a href="javascript:;" data-toggle="modal" data-target="#ActivityFileCreateModal" class="btn bg-blue float-sm-right">
+                                    <i class="fa fa-plus-square"></i>
+                                    Tambah Lampiran
+                                </a>
+                            </div>
+                        </div>
+                        <div class="table-responsive">
+                            <table id="LampiranTable" class="table table-striped table-bordered">
+                                <thead>
+                                    <tr>
+                                        <th></th>
+                                        <th>Nama</th>
+                                        <th>Tanggal Dibuat</th>
+                                        <th>User</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="ActivityFileCreateModal" tabindex="-1" role="dialog" aria-labelledby="ActivityFileCreateModalLabel" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+        @await Html.PartialAsync("~/Views/ActivityDetails/_CreateOrEditFileModal.cshtml", new ActivityFileDto(){ ActivityDetailId = Model.Id })
+        </div>
+    </div>
+</div>
